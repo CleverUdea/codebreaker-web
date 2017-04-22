@@ -8,6 +8,8 @@ import (
 
 func main(){
 
+	port := os.Getenv("PORT")
+
 	if port == "" {
 	port = "8081"
 	}
@@ -15,14 +17,14 @@ func main(){
 	router := gin.Default()
 
 	router.GET("/codebreaker/setup/:number", func(c *gin.Context) {
-		name := c.Param("number")
+		number := c.Param("number")
 		setSecret(number)
 		c.String(http.StatusOK, "Secret number configured: "+ number)
 	})
 
 	router.GET("/codebreaker/guess/:number", func(c *gin.Context) {
-		name := c.Param("number")
-		result :=validate(name)
+		number := c.Param("number")
+		result :=validate(number)
 		c.String(http.StatusOK, "Answer: " + result)
 	})
 
